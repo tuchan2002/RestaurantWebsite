@@ -7,11 +7,23 @@ import { useContext } from "react";
 import { RestaurantContext } from "../../contexts/RestaurantContext";
 import showToastMessage from "../../utils/toastMessage";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function DetailRestaurantCard({ restaurant }) {
     const navigate = useNavigate();
     const { deleteRestaurant, setShowUpdateModal, getARestaurant } =
         useContext(RestaurantContext);
+    const {
+        authState: {
+            user: { id, username, isAdmin },
+        },
+    } = useContext(AuthContext);
+
+    let isShowDeleteButton =
+        -(-restaurant.userId) === -(-id) || isAdmin === 1 ? true : false;
+    let isShowEditButton = -(-restaurant.userId) === -(-id) ? true : false;
+    console.log(restaurant.userId, id, isAdmin);
+
     const handleDeleteRestaurant = async () => {
         const { success, message } = await deleteRestaurant(restaurant.id);
         showToastMessage(message, success ? "success" : "warning");
@@ -52,16 +64,23 @@ function DetailRestaurantCard({ restaurant }) {
                     </div>
                 </Card.Body>
                 <Card.Footer>
-                    <Button
-                        className="me-2"
-                        variant="danger"
-                        onClick={handleDeleteRestaurant}
-                    >
-                        Delete
-                    </Button>
-                    <Button variant="warning" onClick={handleOpenUpdateModal}>
-                        Edit
-                    </Button>
+                    {isShowDeleteButton && (
+                        <Button
+                            className="me-2"
+                            variant="danger"
+                            onClick={handleDeleteRestaurant}
+                        >
+                            Delete
+                        </Button>
+                    )}
+                    {isShowEditButton && (
+                        <Button
+                            variant="warning"
+                            onClick={handleOpenUpdateModal}
+                        >
+                            Edit
+                        </Button>
+                    )}
                 </Card.Footer>
             </Card>
         </>
