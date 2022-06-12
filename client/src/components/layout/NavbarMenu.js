@@ -11,7 +11,7 @@ import "./NavbarMenu.css";
 function NavbarMenu() {
     const {
         authState: {
-            user: { username },
+            user: { username, isAdmin },
         },
         logoutUser,
     } = useContext(AuthContext);
@@ -19,6 +19,9 @@ function NavbarMenu() {
     const logout = () => {
         logoutUser();
     };
+
+    let isShowUserList = isAdmin === 0 ? false : true;
+
     return (
         <Navbar expand="lg" bg="primary" variant="dark" className="shadow">
             <Nav.Link to="/" as={Link}>
@@ -59,6 +62,15 @@ function NavbarMenu() {
                     >
                         About
                     </Nav.Link>
+                    {isShowUserList && (
+                        <Nav.Link
+                            className="text-white ms-3 nav-item-link"
+                            to="/admin"
+                            as={Link}
+                        >
+                            User Management
+                        </Nav.Link>
+                    )}
                 </Nav>
 
                 <Nav className="mx-2 d-flex align-items-center">

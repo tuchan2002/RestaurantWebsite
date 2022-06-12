@@ -5,12 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import AuthContextProvider from "./contexts/AuthContext";
 import RestaurantContextProvider from "./contexts/RestaurantContext";
+import UserContextProvider from "./contexts/UserContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <AuthContextProvider>
         <RestaurantContextProvider>
-            <App />
+            <UserContextProvider>
+                <App />
+            </UserContextProvider>
         </RestaurantContextProvider>
     </AuthContextProvider>
 );

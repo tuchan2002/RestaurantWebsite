@@ -5,7 +5,9 @@ import Dashboard from "./views/Dashboard";
 import About from "./views/About";
 import Auth from "./views/Auth";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
 import DetailRestaurant from "./views/DetailRestaurant";
+import UserManagement from "./views/UserManagement";
 
 function App() {
     return (
@@ -45,6 +47,16 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <DetailRestaurant />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/"
+                    element={
+                        <ProtectedRoute>
+                            <AdminRoute>
+                                <UserManagement />
+                            </AdminRoute>
                         </ProtectedRoute>
                     }
                 />

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -33,5 +34,8 @@ Route::middleware('cors')->group(function(){
         Route::delete('/restaurants/{id}', [RestaurantController::class, 'destroy'])->middleware(['verifyAdminAndUser']);
         Route::get('/auth',[AuthController::class, 'checkUserLoggedIn']);
         Route::post('/auth/logout',[AuthController::class, 'logout']);
+
+        Route::get('/users', [UserController::class, 'index'])->middleware(['verifyAdmin']);
+        Route::delete('/users/{id}', [UserController::class, 'deleteUser'])->middleware(['verifyAdmin']);
     });
 });
