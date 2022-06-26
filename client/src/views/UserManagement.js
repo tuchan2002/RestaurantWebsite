@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import showToastMessage from "../utils/toastMessage";
 import ReactPaginate from "react-paginate";
 
+let dataSelected = 0;
 function UserManagement() {
     const navigate = useNavigate();
     const {
@@ -21,10 +22,12 @@ function UserManagement() {
     const handleDeleteUser = async (userId) => {
         const { success, message } = await deleteUser(userId);
         showToastMessage(message, success ? "success" : "warning");
+        getAllUser(dataSelected + 1);
     };
 
     const handlePageClick = (data) => {
-        getAllUser(data.selected + 1);
+        dataSelected = data.selected;
+        getAllUser(dataSelected + 1);
     };
     return (
         <>
@@ -34,7 +37,7 @@ function UserManagement() {
                     <Table striped bordered>
                         <thead>
                             <tr>
-                                <th style={{ width: "50px" }}>#</th>
+                                <th style={{ width: "60px" }}>#</th>
                                 <th>Username</th>
                                 <th style={{ width: "50px" }}>Action</th>
                             </tr>
@@ -42,7 +45,7 @@ function UserManagement() {
                         <tbody>
                             {users.map((user, index) => (
                                 <tr key={user.id}>
-                                    <td>{index + 1}</td>
+                                    <td>{dataSelected * 8 + index + 1}</td>
                                     <td>{user.username}</td>
                                     <td>
                                         <Button

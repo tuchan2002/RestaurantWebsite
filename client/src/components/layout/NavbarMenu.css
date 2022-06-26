@@ -1,8 +1,9 @@
 .nav-item-link {
     font-weight: bolder;
     font-size: 17px;
+    transform: scale(1);
+    transition: all 0.2s linear;
 }
 .nav-item-link:hover {
-    transform: scaleX(1.1);
-    transition: all 0.2s linear;
+    transform: scale(1.1);
 }
